@@ -8,26 +8,30 @@
     <script src="https://kit.fontawesome.com/67860ce3fd.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
-<body>
-    <div class="app-container" id="tasklist">
-        <h1 class="app-header">TO DO LIST</h1>
+<body> 
+    <main>
 
-        <div class="add-task">
-            <input type="text" autocomplete="off" placeholder="Add New Task" class="task-input" v-model="tasks.name" @keyup.enter="newItem">
-            <input type="submit" class="submit-task" title="Add Task" value="+" @click="newItem">
+        <div class="app-container" id="tasklist">
+            <h1 class="app-header">TO DO LIST</h1>
+            
+            <div class="add-task">
+                <input type="text" autocomplete="off" placeholder="Add New Task" class="task-input" v-model="tasks.name" @keyup.enter="addTask">
+                <input type="submit" class="submit-task" title="Add Task" value="+" @click="addTask">
+            </div>
+            
+            <ul class="task-list">
+                <li class="task-list-item" v-for="(task, index) in tasks" :key="index">
+                    <label class="task-list-item-label">
+                        <input type="checkbox">
+                        <span>{{task.name}}</span>
+                    </label>
+                    <span class="delete-button" title="Delete Task" @click="deleteTask(task)" v-on:click="deleteAlert('Are you sure you want to delete?')">{{task.del}}<i class="fa-solid fa-trash"></i></span>
+                </li>
+            </ul>
+            <p>Total tasks: {{ tasks.length }}</p>
         </div>
- 
-        <ul class="task-list">
-            <li class="task-list-item" v-for="task in tasks">
-                <label class="task-list-item-label" id="tasklist">
-                    <input type="checkbox">
-                    <span>{{task.name}}</span>
-                </label>
-                <span class="delete-button" title="Delete Task" @click="delItem(task)">{{task.del}}<i class="fa-solid fa-trash"></i></span>
-            </li>
-        </ul>
-    </div>
-
+    </main>
+        
     
     <script src="main.js"></script> 
 </body>

@@ -2,14 +2,14 @@ new Vue({
     el: '#tasklist',
     data: { 
         title: 'to do list',
-        tasks: [
-            {name: 'Today : Internal Meeting'},
-            {name: 'Tomorrow : Read A Book'},
-            {name: 'Daily : Event Joins'},
-        ]
+        newTask: '',
+        tasks: []
+    },
+    mounted() {
+        this.tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     },
     methods: {
-        newItem: function() {
+        addTask: function() {
             if (!this.tasks.name) {
                 return
             }
@@ -18,9 +18,21 @@ new Vue({
                 del: ''
             });
             this.tasks.name = "";
+            this.saveTasks();
         },
-        delItem: function (task) {
-            this.tasks.splice(this.tasks.indexOf(task), 1)
+        deleteTask: function (task) {
+            this.tasks.splice(this.tasks.indexOf(task), 1);
+            this.saveTasks();
+        },
+        deleteAlert: function (message, event) {
+            if (event) {
+                event.preventDefault()
+              }
+            alert(message)
+        },
+        saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(this.tasks));
         }
     }
 })
+
